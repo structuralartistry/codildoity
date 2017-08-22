@@ -55,3 +55,28 @@ def test_factorial():
   assert factorial(2) == 2
   assert factorial(10) == 3628800
 
+def triangle_left(rows):
+  output = ''
+  for i in range(1, rows+1):
+    output += "\n{0}".format(i * "*")
+  return output
+
+def triangle_left_1(n):
+  for i in range(1, n+1):
+    for j in range(i):
+      print '*',
+    print
+
+def test_triangle_left():
+  assert triangle_left(5) == "\n*\n**\n***\n****\n*****"
+
+def triangle_centered(number_of_rows):
+  # counting backward
+  for row in range(number_of_rows, 0, -1):
+    for j in range(number_of_rows-row):
+      # so when 4 rows and on 1st row, row == number_of_rows, so 0 '' here
+      print ' ',
+    for k in range(2 * row -1):
+      print '*',
+    print 
+

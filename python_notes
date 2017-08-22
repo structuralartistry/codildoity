@@ -6,3 +6,6 @@ profiling
   
 load file
   execfile(file name)
+
+pytest
+  run: pytest [file]
