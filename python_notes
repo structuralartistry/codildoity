@@ -1,0 +1,8 @@
+profiling
+  import cProfile
+  import re
+
+  cProfile.run('method(args)')
+  
+load file
+  execfile(file name)
