@@ -80,3 +80,47 @@ def triangle_centered(number_of_rows):
       print '*',
     print 
 
+def count_decimal_rep(n):
+  result = 0
+  while n > 0:
+    n = n / 10
+    result += 1
+  return result
+
+def test_count_decimal_rep():
+  assert count_decimal_rep(1) == 1
+  assert count_decimal_rep(10) == 2
+  assert count_decimal_rep(1000) == 4
+
+def fibonacci(max_value):
+  nums = []
+  second_to_last_value = 0
+  last_value = 1
+  while second_to_last_value <= max_value:
+    nums.append(second_to_last_value)
+    new_value = second_to_last_value + last_value
+    second_to_last_value = last_value
+    last_value = new_value
+
+  return nums
+
+def fibonacci_codility(max_value):
+  output = []
+  a = 0
+  b = 1
+  while a <= max_value:
+    output.append(a)
+    c = a + b
+    a = b
+    b = c
+  return output 
+    
+def test_fibonacci():
+  assert fibonacci(3) == [0,1,1,2,3]
+  assert fibonacci(9) == [0,1,1,2,3,5,8]
+  assert fibonacci(15) == [0,1,1,2,3,5,8,13]
+  
+def test_fibonacci_codility():
+  assert fibonacci_codility(3) == [0,1,1,2,3]
+  assert fibonacci_codility(9) == [0,1,1,2,3,5,8]
+  assert fibonacci_codility(15) == [0,1,1,2,3,5,8,13]
