@@ -97,6 +97,8 @@ def fibonacci(max_value):
   second_to_last_value = 0
   last_value = 1
   while second_to_last_value <= max_value:
+    # always append the second to last value so can compare the last
+    # value on the next iteration and potentially cancel it if exceeds max
     nums.append(second_to_last_value)
     new_value = second_to_last_value + last_value
     second_to_last_value = last_value
@@ -124,3 +126,31 @@ def test_fibonacci_codility():
   assert fibonacci_codility(3) == [0,1,1,2,3]
   assert fibonacci_codility(9) == [0,1,1,2,3,5,8]
   assert fibonacci_codility(15) == [0,1,1,2,3,5,8,13]
+
+def iterate_collections():
+  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  for day in days:
+    print day
+
+  days = set(days)
+
+  print
+
+  for day in days:
+    print day
+
+def iterate_dictionary():
+  days = {'M': 'Monday', 
+          'T': 'Tuesday', 
+          'W': 'Wednesday', 
+          'R': 'Thursday', 
+          'F': 'Friday', 
+          'S': 'Saturday', 
+          'SU': 'Sunday'}
+
+  for day in days:
+    print day, 'stands for', days[day]
+  for day in days:
+    print "(formatted) {0} stands for {1}".format(day, days[day])
+    
+
