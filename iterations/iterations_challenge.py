@@ -17,7 +17,6 @@
 #  
 #  expected worst-case time complexity is O(log(N));
 #  expected worst-case space complexity is O(1).
-import pdb;
 
 def solution(N):
   longest_binary_gap = 0
@@ -28,10 +27,10 @@ def solution(N):
 
   quotient = N
   while quotient > 0:
-
-# the problem is that the longest gap is first
-    #pdb.set_trace()
     quotient, remainder = divmod(quotient, 2)
+
+    # until we have remainder of > 0 dont have to do the rest
+
     if remainder == 0:
       current_binary_gap += 1
     else:
@@ -45,15 +44,15 @@ def solution(N):
 
 
 def test_solution():
+  assert solution(7) == 0
+  assert solution(28) == 0
   assert solution(9) == 2
   assert solution(529) == 4
   assert solution(20) == 1
   assert solution(15) == 0
   assert solution(1) == 0
   assert solution(2147483647) == 0
-
-
-
+  assert solution(0) == 0
 
 
 
