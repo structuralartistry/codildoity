@@ -17,53 +17,92 @@
 #  
 #  expected worst-case time complexity is O(log(N));
 #  expected worst-case space complexity is O(1).
+import pdb;
 
+def solution(N):
+  longest_binary_gap = 0
+  current_binary_gap = 0
 
-def longest_binary_gap(binary_num):
-  first_one_reached = 0 
-  max_gap_length = 0
-  current_gap_length = 0
+  # must make sure a 1 remainder is hit
+  one_remainder_hit = False 
 
-  word_length = len(binary_num)
+  quotient = N
+  while quotient > 0:
 
-# 00000 shouldn't find any... how?
-# strip leading/tailing 0
-#   - dont ch curr len to max length if no 1 yet
-#   - dont ch curr len to max length if ends on 0
-
-  # start at second and end second to last char 
-  for i in xrange(0, word_length):
-    if binary_num[i] == '0':
-      current_gap_length += 1
-
-    # if at end of word and the value is 0 we dont want to count this gap length
-    if i == word_length-1:
-      current_gap_length = 0
+# the problem is that the longest gap is first
+    #pdb.set_trace()
+    quotient, remainder = divmod(quotient, 2)
+    if remainder == 0:
+      current_binary_gap += 1
     else:
-      if first_one_reached == 0:
-        current_gap_length = 0
-      first_one_reached = 1
-      if (current_gap_length > max_gap_length) & first_one_reached == 1:
-        max_gap_length = current_gap_length
-      current_gap_length = 0
+      # remainder is 1
+      if (current_binary_gap > longest_binary_gap) & one_remainder_hit:
+        longest_binary_gap = current_binary_gap
+      one_remainder_hit = True
+      current_binary_gap = 0
+    
+  return longest_binary_gap
 
-  # this handles 
-  if first_one_reached == 0:
-    current_gap_length = 0
-  if (current_gap_length > max_gap_length) & first_one_reached == 1:
-    max_gap_length = current_gap_length
-  return max_gap_length
 
-def test_longest_binary_gap():
-  assert longest_binary_gap('10001') == 3
-  assert longest_binary_gap('11011') == 1
-  assert longest_binary_gap('11001') == 2
+def test_solution():
+  assert solution(9) == 2
+  assert solution(529) == 4
+  assert solution(20) == 1
+  assert solution(15) == 0
+  assert solution(1) == 0
+  assert solution(2147483647) == 0
 
-  assert longest_binary_gap('00001') == 0
 
-  assert longest_binary_gap('00000') == 0
-  assert longest_binary_gap('11111') == 0
-  assert longest_binary_gap('10000') == 0
+
+
+
+
+
+#def longest_binary_gap(binary_num):
+#  first_one_reached = 0 
+#  max_gap_length = 0
+#  current_gap_length = 0
+#
+#  word_length = len(binary_num)
+#
+## 00000 shouldn't find any... how?
+## strip leading/tailing 0
+##   - dont ch curr len to max length if no 1 yet
+##   - dont ch curr len to max length if ends on 0
+#
+#  # start at second and end second to last char 
+#  for i in xrange(0, word_length):
+#    if binary_num[i] == '0':
+#      current_gap_length += 1
+#
+#    # if at end of word and the value is 0 we dont want to count this gap length
+#    if i == word_length-1:
+#      current_gap_length = 0
+#    else:
+#      if first_one_reached == 0:
+#        current_gap_length = 0
+#      first_one_reached = 1
+#      if (current_gap_length > max_gap_length) & first_one_reached == 1:
+#        max_gap_length = current_gap_length
+#      current_gap_length = 0
+#
+#  # this handles 
+#  if first_one_reached == 0:
+#    current_gap_length = 0
+#  if (current_gap_length > max_gap_length) & first_one_reached == 1:
+#    max_gap_length = current_gap_length
+#  return max_gap_length
+#
+#def test_longest_binary_gap():
+#  assert longest_binary_gap('10001') == 3
+#  assert longest_binary_gap('11011') == 1
+#  assert longest_binary_gap('11001') == 2
+#
+#  assert longest_binary_gap('00001') == 0
+#
+#  assert longest_binary_gap('00000') == 0
+#  assert longest_binary_gap('11111') == 0
+#  assert longest_binary_gap('10000') == 0
 
 
 
