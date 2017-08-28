@@ -21,38 +21,40 @@
 def solution(N):
   longest_binary_gap = 0
   current_binary_gap = 0
-
-  # must make sure a 1 remainder is hit
-  one_remainder_hit = False 
-
+  one_remainder_reached = False 
   quotient = N
+
   while quotient > 0:
+    #quotient, remainder = divmod(quotient, 2)
     quotient, remainder = divmod(quotient, 2)
 
     # until we have remainder of > 0 dont have to do the rest
+    if remainder == 1: one_remainder_reached = True
 
-    if remainder == 0:
-      current_binary_gap += 1
-    else:
-      # remainder is 1
-      if (current_binary_gap > longest_binary_gap) & one_remainder_hit:
-        longest_binary_gap = current_binary_gap
-      one_remainder_hit = True
-      current_binary_gap = 0
-    
+    if one_remainder_reached:
+
+      if remainder == 0:
+        current_binary_gap += 1
+      else:
+        # remainder is 1
+        if (current_binary_gap > longest_binary_gap):
+          longest_binary_gap = current_binary_gap
+        current_binary_gap = 0
+      
   return longest_binary_gap
 
 
 def test_solution():
-  assert solution(7) == 0
-  assert solution(28) == 0
-  assert solution(9) == 2
-  assert solution(529) == 4
-  assert solution(20) == 1
-  assert solution(15) == 0
-  assert solution(1) == 0
-  assert solution(2147483647) == 0
-  assert solution(0) == 0
+  for i in xrange(0,100000):
+    assert solution(7) == 0
+    assert solution(28) == 0
+    assert solution(9) == 2
+    assert solution(529) == 4
+    assert solution(20) == 1
+    assert solution(15) == 0
+    assert solution(1) == 0
+    assert solution(2147483647) == 0
+    assert solution(0) == 0
 
 
 
