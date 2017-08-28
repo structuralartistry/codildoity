@@ -22,11 +22,12 @@ def solution(N):
   longest_binary_gap = 0
   current_binary_gap = 0
   one_remainder_reached = False 
-  quotient = N
 
-  while quotient > 0:
+  while N > 0:
     #quotient, remainder = divmod(quotient, 2)
-    quotient, remainder = divmod(quotient, 2)
+    quotient = N // 2
+    remainder = N % 2
+    N = quotient # must assign after get remainder
 
     # until we have remainder of > 0 dont have to do the rest
     if remainder == 1: one_remainder_reached = True
@@ -43,6 +44,30 @@ def solution(N):
       
   return longest_binary_gap
 
+# using divmod:
+#>>> cProfile.run('test_solution()')
+#         7200003 function calls in 2.754 seconds
+#
+#   Ordered by: standard name
+#
+#   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+#        1    0.000    0.000    2.754    2.754 <string>:1(<module>)
+#   900000    1.694    0.000    2.594    0.000 iterations_challenge.py:21(solution)
+#        1    0.160    0.160    2.754    2.754 iterations_challenge.py:47(test_solution)
+#  6300000    0.900    0.000    0.900    0.000 {divmod}
+#        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+# using // and % alone
+#>>> cProfile.run('test_solution()')
+#         900003 function calls in 1.640 seconds
+#
+#   Ordered by: standard name
+#
+#   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+#        1    0.000    0.000    1.640    1.640 <string>:1(<module>)
+#   900000    1.439    0.000    1.439    0.000 iterations_challenge.py:21(solution)
+#        1    0.201    0.201    1.640    1.640 iterations_challenge.py:67(test_solution)
+#        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 
 def test_solution():
   for i in xrange(0,100000):
