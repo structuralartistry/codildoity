@@ -15,28 +15,37 @@
 # each element of array A is an integer within the range [-1000..1000].
 # In your solution, focus on correctness. The performance of your solution will not be the focus of the assessment.
 
+import pdb
 def solution(A,K):
   N = len(A)
-  zero_index_offset = N%K
+  zero_index_offset = None
 
-  # if N > K and no remainder, return
-  remainder = N%K
-  if (N>=K) and (remainder==0): return A
+  mod = N%K
+  if N==K: return A
+  if N>K: zero_index_offset = mod + 1
+  if N<K: zero_index_offset = N-mod
 
-  # if N > K and remainder, offset by the remainder
-  if remainder > 0:
-    # get the back end by the remainder offset
-    back_end = A[-remainder-1:]
-    front_end = A[0:N-remainder-1]
+  if zero_index_offset > 0:
+    # get the back end by the zero_index_offset offset
+    back_end = A[-zero_index_offset:]
+    front_end = A[0:N-zero_index_offset]
 
     return back_end + front_end
-
-  return A[-K:] + A[0:(K-N-1)]
+  else: 
+    return A
 
 
 def test_solution():
-  assert solution([3,8,9,7,6],3) == [9,7,6,3,8]
-  assert solution([3,8,9,7,6],5) == [3,8,9,7,6]
+  assert solution([]) == []
   assert solution([3,8,9,7,6],6) == [6,3,8,9,7]
+  assert solution([3,8,9,7,6],5) == [3,8,9,7,6]
+  assert solution([3,8,9,7,6],3) == [9,7,6,3,8]
+
+  arr = [i for i in xrange(1,101)]
+  result = solution(arr, 10)
+  print result
+  assert result[0] == 91
+  assert result[99] == 90
+  
 
 
