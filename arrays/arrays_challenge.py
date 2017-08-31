@@ -55,20 +55,40 @@
 #
 #  return list(set(array) - set(matches_array))[0]
 
+
+# todo:
+# quick profile pieces of code
+#   build out native array functions?
+# get current passing
+# build out more tests
+# find fastest and submit
+
+import pdb
+
 def test_solution():
   A = [9,3,9,3,9,7,9]
-  assert solution_2(A) == 7
+  assert solution_1(A) == 7
 
   # build max array
   arr = []
-  arr = [1000000000 for _ in xrange(999999)]
+  arr = [1000000000 for _ in xrange(999998)]
   arr += [7]
+  assert len(arr) == 999999
+  assert arr[len(arr)-1] == 7
 
-  assert solution_2(arr) == 7
+  assert solution_1(arr) == 7
 
+  arr = []
+  arr = [i for i in xrange(400000)]
+  arr += [1000000000]
+  arr += [i for i in xrange(400000)]
+  assert len(arr) == 800001
+  assert arr[400000] == 1000000000
 
+  assert solution_1(arr) == 1000000000
+
+# this hash for non-matches
 def solution_1(array):
-  # spec is up to 1m elements in list
   non_matches_hash = {}
 
   array_length = len(array)
@@ -83,9 +103,8 @@ def solution_1(array):
 
   return non_matches_hash.keys()[0]
 
+# this uses array for non-matches
 def solution_2(array):
-  # spec is up to 1m elements in list
-  # is None faster?
   non_matches_array = []
 
   array_length = len(array)
@@ -103,4 +122,4 @@ def solution_2(array):
       # add to non-matches array
       non_matches_array += [val]
 
-  return list(set(array) - set(matches_array))[0]
+  return non_matches_array[0]
