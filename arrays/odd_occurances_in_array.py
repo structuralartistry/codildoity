@@ -32,68 +32,16 @@
 # expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
 # Elements of input arrays can be modified.
 
-# find unpaired element in list 
-#def solution(array):
-#  # spec is up to 1m elements in list
-#  # is None faster?
-#  lookup_array = [None for _ in xrange(1000000000)]
-#  matches_array = []
-#
-#  array_length = len(array)
-#  for i in xrange(array_length):
-#    val = array[i]
-#    print val
-#    existing_value_index = lookup_array[val-1]
-#    if existing_value_index == None:
-#      # zero index, so val-1
-#      lookup_array[val-1] = i
-#    else:
-#      # add match to matches array
-#      matches_array += [val] * 2
-#      # remove from lookup array as pair already matched
-#      lookup_array[val-1] = None # reset count
-#
-#  return list(set(array) - set(matches_array))[0]
 
-
-# todo:
-# quick profile pieces of code
-#   build out native array functions?
-# get current passing
-# build out more tests
-# find fastest and submit
-
-import pdb
-
-def test_solution():
-  A = [9,3,9,3,9,7,9]
-  assert solution_1(A) == 7
-
-  # build max array
-  arr = []
-  arr = [1000000000 for _ in xrange(999998)]
-  arr += [7]
-  assert len(arr) == 999999
-  assert arr[len(arr)-1] == 7
-
-  assert solution_1(arr) == 7
-
-  arr = []
-  arr = [i for i in xrange(400000)]
-  arr += [1000000000]
-  arr += [i for i in xrange(400000)]
-  assert len(arr) == 800001
-  assert arr[400000] == 1000000000
-
-  assert solution_1(arr) == 1000000000
-
-# this hash for non-matches
-def solution_1(array):
+# this uses hash for non-matches
+# was concerned that using hash would take me out of O(n) time but this solution scored 100%
+def solution(array):
   non_matches_hash = {}
 
   array_length = len(array)
   for i in xrange(array_length):
     val = array[i]
+
     existing_value = non_matches_hash.get(val)
     if existing_value == None:
       non_matches_hash[val] = 1
@@ -103,8 +51,30 @@ def solution_1(array):
 
   return non_matches_hash.keys()[0]
 
+def test_solution():
+  A = [9,3,9,3,9,7,9]
+
+  arr1 = []
+  arr1 = [1000000000 for _ in xrange(999998)]
+  arr1 += [8]
+  assert len(arr1) == 999999
+  assert arr1[len(arr1)-1] == 8
+
+  arr2 = []
+  arr2 = [i for i in xrange(400000)]
+  arr2 += [1000000000]
+  arr2 += [i for i in xrange(400000)]
+  assert len(arr2) == 800001
+  assert arr2[400000] == 1000000000
+
+  assert solution(A) == 7
+  assert solution(arr1) == 8
+  assert solution(arr2) == 1000000000
+
+
+# VERY SLOW
 # this uses array for non-matches
-def solution_2(array):
+def solution_1(array):
   non_matches_array = []
 
   array_length = len(array)
@@ -113,7 +83,7 @@ def solution_2(array):
     # find/see if val exists in non-matches array
     existing_value = False
     for j in xrange(len(non_matches_array)):
-      if j == val:
+      if non_matches_array[j] == val:
         existing_value = True
         del non_matches_array[j]
         break
@@ -123,3 +93,25 @@ def solution_2(array):
       non_matches_array += [val]
 
   return non_matches_array[0]
+
+# VERY SLOW
+def solution_2(array):
+  # spec is up to 1m elements in list
+  # is None faster?
+  lookup_array = [None for _ in xrange(1000000000)]
+  matches_array = []
+
+  array_length = len(array)
+  for i in xrange(array_length):
+    val = array[i]
+    existing_value_index = lookup_array[val-1]
+    if existing_value_index == None:
+      # zero index, so val-1
+      lookup_array[val-1] = i
+    else:
+      # add match to matches array
+      matches_array += [val] * 2
+      # remove from lookup array as pair already matched
+      lookup_array[val-1] = None # reset count
+
+  return list(set(array) - set(matches_array))[0]

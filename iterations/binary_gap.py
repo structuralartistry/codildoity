@@ -70,7 +70,7 @@ def solution(N):
 #        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 
 def test_solution():
-  for i in xrange(0,100000):
+  for _ in xrange(0,100000):
     assert solution(7) == 0
     assert solution(28) == 0
     assert solution(9) == 2
