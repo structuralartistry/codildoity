@@ -18,34 +18,45 @@
 import pdb
 def solution(A,K):
   N = len(A)
-  zero_index_offset = None
+  # empty array case 
+  if not A: return A
+  
+  # if will loop more than once then make K the offset, full cycles don't matter
+  if N<K:
+    full_cycle_times = K//N
+    K = K - (full_cycle_times*N)
+    
+  # non-cyclding returns original array 
+  if K==0 or N==K: return A 
 
-  mod = N%K
-  if N==K: return A
-  if N>K: zero_index_offset = mod + 1
-  if N<K: zero_index_offset = N-mod
+  # rearrange
+  back_end = A[-K:]
+  front_end = A[0:N-K]
 
-  if zero_index_offset > 0:
-    # get the back end by the zero_index_offset offset
-    back_end = A[-zero_index_offset:]
-    front_end = A[0:N-zero_index_offset]
-
-    return back_end + front_end
-  else: 
-    return A
+  return back_end + front_end
 
 
 def test_solution():
-  assert solution([]) == []
-  assert solution([3,8,9,7,6],6) == [6,3,8,9,7]
+  assert solution([],0) == []
+  assert solution([],100) == []
   assert solution([3,8,9,7,6],5) == [3,8,9,7,6]
   assert solution([3,8,9,7,6],3) == [9,7,6,3,8]
+  assert solution([3,8,9,7,6],6) == [6,3,8,9,7]
+  assert solution([3,8,9,7,6],15) == [3,8,9,7,6]
+  assert solution([3,8,9,7,6],18) == [9,7,6,3,8]
+  assert solution([3,8,9,7,6],51) == [6,3,8,9,7]
 
+  # N = 100
   arr = [i for i in xrange(1,101)]
   result = solution(arr, 10)
-  print result
   assert result[0] == 91
   assert result[99] == 90
-  
-
+  result = solution(arr, 100)
+  assert result[0] == 1
+  assert result[99] == 100
+  # N = 99 
+  arr = [i for i in xrange(1,100)]
+  result = solution(arr, 10)
+  assert result[0] == 90
+  assert result[98] == 89
 
