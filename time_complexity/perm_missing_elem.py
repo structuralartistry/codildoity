@@ -25,3 +25,36 @@
 # expected worst-case time complexity is O(N);
 # expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
 # Elements of input arrays can be modified.
+
+def solution(A):
+  if not A: return 0
+
+  # initialize to highest/lowest poss values in reverse
+  min_elem = 100000
+  max_elem = 0
+
+# problem is i need both the sum of the arr (have)
+# and the sum of contiguous (dont have)
+  sum = 0
+  for i in A:
+    if i < min_elem: min_elem = i
+    if i > max_elem: max_elem = i
+    sum += i
+
+  return 
+
+def test_solution():
+  arr = [2,3,1,5]
+  assert solution(arr) == 4
+
+  # with 0 elem
+  arr = []
+  assert solution(arr) == 0
+
+  # large range
+  arr = [i for i in xrange(1,100001)]
+  assert len(arr) == 100000
+  assert arr[50000] = 49999
+  del arr[50000]
+  assert solution(arr) == 49999
+    
