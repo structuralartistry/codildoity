@@ -27,21 +27,27 @@
 # Elements of input arrays can be modified.
 
 def solution(A):
-  if not A: return 0
+  length = len(A)
+  if length == 0:
+    return 0
+  elif length <= 2:
+    return A[0]-1
 
   # initialize to highest/lowest poss values in reverse
   min_elem = 100000
   max_elem = 0
 
-# problem is i need both the sum of the arr (have)
-# and the sum of contiguous (dont have)
-  sum = 0
+  A_sum = 0
   for i in A:
     if i < min_elem: min_elem = i
     if i > max_elem: max_elem = i
-    sum += i
+    A_sum += i
 
-  return 
+  expected_sum = 0
+  for i in xrange(min_elem, max_elem+1):
+    expected_sum += i
+
+  return expected_sum - A_sum
 
 def test_solution():
   arr = [2,3,1,5]
@@ -51,10 +57,23 @@ def test_solution():
   arr = []
   assert solution(arr) == 0
 
+  # with 1 elem
+  arr = [3]
+  assert solution(arr) == 2
+
+  # with 2 elem
+  arr = [3,4]
+  assert solution(arr) == 2
+
+  # large sequential
+  arr = [i for i in xrange(1,100001)]
+  assert len(arr) == 100000
+  assert solution(arr) == 0
+
   # large range
   arr = [i for i in xrange(1,100001)]
   assert len(arr) == 100000
-  assert arr[50000] = 49999
+  assert arr[50000] == 50001
   del arr[50000]
-  assert solution(arr) == 49999
+  assert solution(arr) == 50001
     
