@@ -27,27 +27,14 @@
 # Elements of input arrays can be modified.
 
 def solution(A):
-  length = len(A)
-  if length == 0:
-    return 0
-  elif length <= 2:
-    return A[0]-1
-
-  # initialize to highest/lowest poss values in reverse
-  min_elem = 100000
-  max_elem = 0
-
-  A_sum = 0
+  n = len(A)+1
+  
+  actual_sum = 0
+  expected_sum = n*((n+1))/2
   for i in A:
-    if i < min_elem: min_elem = i
-    if i > max_elem: max_elem = i
-    A_sum += i
+    actual_sum += i
 
-  expected_sum = 0
-  for i in xrange(min_elem, max_elem+1):
-    expected_sum += i
-
-  return expected_sum - A_sum
+  return expected_sum-actual_sum
 
 def test_solution():
   arr = [2,3,1,5]
@@ -55,20 +42,20 @@ def test_solution():
 
   # with 0 elem
   arr = []
-  assert solution(arr) == 0
+  assert solution(arr) == 1
 
   # with 1 elem
-  arr = [3]
+  arr = [1]
   assert solution(arr) == 2
 
   # with 2 elem
-  arr = [3,4]
-  assert solution(arr) == 2
+  arr = [1,2]
+  assert solution(arr) == 3
 
   # large sequential
   arr = [i for i in xrange(1,100001)]
   assert len(arr) == 100000
-  assert solution(arr) == 0
+  assert solution(arr) == 100001
 
   # large range
   arr = [i for i in xrange(1,100001)]
